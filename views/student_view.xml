@@ -1,10 +1,76 @@
 <odoo>
     <data>
 
+        <!--create student tree view-->
+        <record id="student_tree_view" model="ir.ui.view">
+            <field name="name">Student Tree View</field>
+            <field name="model">iti.student</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="level"/>
+                    <field name="birthdate"/>
+                    <field name="image"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--create student form view-->
+        <record id="student_form_view" model="ir.ui.view">
+            <field name="name">Student Form View</field>
+            <field name="model">iti.student</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+
+                        <group string="Basic Info">
+                            <field name="name"/>
+                            <field name="birthdate" attrs="{'invisible': [('gender', '=', 'female')]}"/>
+                            <field name="address"/>
+                            <field name="salary"/>
+                            <field name="gender"/>
+                            <field name="skills_ids" widget="many2many_tags"/>
+                        </group>
+
+                        <group string="ITI Info">
+                            <field name="accepted"/>
+                            <field name="level"/>
+                            <field name="track_id" domain="[('is_open', '=', True)]"/>
+                            <field name="track_capacity"/>
+                            <field name="cv"/>
+                            <field name="login_time"/>
+                        </group>
+                    </group>
+
+
+                    <notebook>
+                        <page string="Cv">
+                            <field name="cv"/>
+                        </page>
+
+                        <page string="Image">
+                            <field name="image" widget="image"/>
+                        </page>
+
+                        <page string="Grades">
+                            <field name="grade_ids">
+                                <tree>
+                                    <field name="student_id"/>
+                                    <field name="course_id"/>
+                                    <field name="grade"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
         <record id="students_action" model="ir.actions.act_window">
             <field name="name">Students</field>
             <field name="res_model">iti.student</field>
         </record>
+
         <menuitem name="ITI" id="iti_root"/>
         <menuitem name="Students" id="iti_student_menu" parent="iti_root" action="students_action"/>
 
