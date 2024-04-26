@@ -21,47 +21,61 @@
             <field name="model">iti.student</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
+                    <header>
+                        <button string="Set First Interview" name="change_state" states="applied" type="object"/>
+                        <button string="Set Second Interview" name="change_state" states="first" type="object"/>
+                        <button string="Passed" name="set_passed" states="second" type="object"/>
+                        <button string="Rejected" name="set_rejected" states="second" type="object"/>
+                        <button string="Back To Applied" name="change_state" states="rejected" type="object"/>
+                        <button string="Back To Applied" name="change_state" states="passed" type="object"/>
+                        <field name="state" width="statusbar" statusbar_visible="passed, rejected"/>
+                    </header>
+                    <sheet>
+                        <group>
 
-                        <group string="Basic Info">
-                            <field name="name"/>
-                            <field name="birthdate" attrs="{'invisible': [('gender', '=', 'female')]}"/>
-                            <field name="address"/>
-                            <field name="salary"/>
-                            <field name="gender"/>
-                            <field name="skills_ids" widget="many2many_tags"/>
+                            <group string="Basic Info">
+                                <field name="name"/>
+                                <field name="email"/>
+                                <field name="birthdate" attrs="{'invisible': [('gender', '=', 'female')]}"/>
+                                <field name="address"/>
+                                <field name="salary"/>
+                                <field name="tax"/>
+                                <field name="gender"/>
+                                <field name="skills_ids" widget="many2many_tags"/>
+                                <field name="state"/>
+                            </group>
+
+                            <group string="ITI Info">
+                                <field name="accepted"/>
+                                <field name="level"/>
+                                <field name="track_id" domain="[('is_open', '=', True)]"/>
+                                <field name="track_capacity"/>
+                                <field name="cv"/>
+                                <field name="login_time"/>
+                            </group>
                         </group>
 
-                        <group string="ITI Info">
-                            <field name="accepted"/>
-                            <field name="level"/>
-                            <field name="track_id" domain="[('is_open', '=', True)]"/>
-                            <field name="track_capacity"/>
-                            <field name="cv"/>
-                            <field name="login_time"/>
-                        </group>
-                    </group>
 
+                        <notebook>
+                            <page string="Cv">
+                                <field name="cv"/>
+                            </page>
 
-                    <notebook>
-                        <page string="Cv">
-                            <field name="cv"/>
-                        </page>
+                            <page string="Image">
+                                <field name="image" widget="image"/>
+                            </page>
 
-                        <page string="Image">
-                            <field name="image" widget="image"/>
-                        </page>
-
-                        <page string="Grades">
-                            <field name="grade_ids">
-                                <tree>
-                                    <field name="student_id"/>
-                                    <field name="course_id"/>
-                                    <field name="grade"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
+                            <page string="Grades">
+                                <field name="grade_ids">
+                                    <tree>
+                                        <field name="student_id"/>
+                                        <field name="course_id"/>
+                                        <field name="grade"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
                 </form>
             </field>
         </record>
