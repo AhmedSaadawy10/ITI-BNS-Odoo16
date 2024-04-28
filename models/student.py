@@ -14,7 +14,7 @@ class Student(models.Model):
         [
             ('male', 'Male'),
             ('female', 'Female'),
-        ], default='mail',
+        ], default='male',
     )
     accepted = fields.Boolean()
     level = fields.Integer()
@@ -96,11 +96,11 @@ class Student(models.Model):
         new_student = super().create(vals)
         new_split = new_student.name.split()
         new_student.email = f"{new_split[0][0]}{new_split[1]}@gmail.com"
-        # if this email is already existing, it will raise an error
-        existing_student_email = self.search([('email', '=', new_student.email)], limit=1)
-        if existing_student_email:
-            raise exceptions.ValidationError('This email is already taken by another student')
         return new_student
+
+    _sql_constraints = [
+        ('email_unique', 'unique(email)', 'Email already exists!')
+    ]
 
     """
     Writes the given values to the model.
@@ -198,7 +198,7 @@ class StudentSkill(models.Model):
 class StudentCourseGrade(models.Model):
     _name = "student.course.line"
 
-    student_id = fields.Many2one("iti.student")
+    student_id = fields.Many2one("iti.student", readonly=True)
     course_id = fields.Many2one("iti.course")
     grade = fields.Selection([
         ('excellent', "Excellent"),

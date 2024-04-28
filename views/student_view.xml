@@ -8,9 +8,9 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name="level"/>
-                    <field name="birthdate"/>
-                    <field name="image"/>
+                    <field name="email"/>
+                    <field name="track_id"/>
+                    <field name="image" widget="image" options="{'size': [50, 50]}"/>
                 </tree>
             </field>
         </record>
@@ -28,7 +28,7 @@
                         <button string="Rejected" name="set_rejected" states="second" type="object"/>
                         <button string="Back To Applied" name="change_state" states="rejected" type="object"/>
                         <button string="Back To Applied" name="change_state" states="passed" type="object"/>
-                        <field name="state" width="statusbar" statusbar_visible="passed, rejected"/>
+                        <field name="state" widget="statusbar" statusbar_visible="passed, rejected"/>
                     </header>
                     <sheet>
                         <group>
@@ -50,8 +50,8 @@
                                 <field name="level"/>
                                 <field name="track_id" domain="[('is_open', '=', True)]"/>
                                 <field name="track_capacity"/>
-                                <field name="cv"/>
                                 <field name="login_time"/>
+                                <field name="image" widget="image" style="max-height: 100px; max-width: 100px;"/>
                             </group>
                         </group>
 
@@ -59,10 +59,6 @@
                         <notebook>
                             <page string="Cv">
                                 <field name="cv"/>
-                            </page>
-
-                            <page string="Image">
-                                <field name="image" widget="image"/>
                             </page>
 
                             <page string="Grades">
