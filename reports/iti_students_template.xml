@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="student_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <t t-call="web.external_layout">
+
+                            <div class="container">
+                                <div class="row justify-content-between mb-5 align-items-center">
+                                    <div class="content-left col-5">
+                                        <h1 class="text-danger">Student Status Report</h1>
+                                    </div>
+                                    <div class="content-right col-5">
+                                        <img t-if="o.image" style="max-height: 200px; max-width: 200px;"
+                                             t-att-src="image_data_uri(o.image)"
+                                             alt="Cover Image"/>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-between">
+                                    <div class="content-left col-4">
+                                        <p t-att-class="">
+                                            <span class="text-primary fw-bold">
+                                                Name:
+                                            </span>
+                                            <span t-field="o.name"/>
+                                        </p>
+                                        <p t-att-class="">
+                                            <span class="text-primary fw-bold">Birth Date:</span>
+                                            <span  t-field="o.birthdate" />
+                                        </p>
+                                        <p t-att-class="">
+                                            <span class="text-primary fw-bold">Email:</span>
+                                            <span  t-field="o.email" />
+                                        </p>
+                                        <p t-att-class="">
+                                            <span class="text-primary fw-bold">Track:</span>
+                                            <span t-field="o.track_id" />
+                                        </p>
+                                    </div>
+
+                                    <div class="content-right col-4">
+                                        <p t-att-class="">
+                                            <span class="text-primary fw-bold">Skills:</span>
+                                            <span t-field="o.skills_ids" />
+                                        </p>
+                                        <p t-att-class="">
+                                            <span t-att-class="'text-primary fw-bold'">Grade:</span>
+                                            <span t-field="o.grade_ids.grade" />
+                                        </p>
+                                        <p t-att-class="">
+                                            <span t-att-class="'text-primary fw-bold'">State:</span>
+                                            <span t-field="o.state" />
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </t>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
